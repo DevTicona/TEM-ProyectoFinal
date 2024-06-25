@@ -1,9 +1,12 @@
 package com.emergentes.controlador;
 
+import com.emergentes.dao.EstudianteDAO;
+import com.emergentes.dao.EstudianteDAO_impl;
 import com.emergentes.dao.MateriaDAO;
 import com.emergentes.dao.MateriaDAO_impl;
 import com.emergentes.dao.TemaDAO;
 import com.emergentes.dao.TemaDAO_impl;
+import com.emergentes.modelo.Estudiante;
 import com.emergentes.modelo.Materia;
 import com.emergentes.modelo.Tema;
 import com.emergentes.utiles.ConexionDB;
@@ -25,44 +28,58 @@ public class MateriaControlador extends HttpServlet {
             throws ServletException, IOException {
         try (Connection conn = new ConexionDB().conectar()) {
             MateriaDAO daoMateria = new MateriaDAO_impl(conn);
+            
+            EstudianteDAO daoEst = new EstudianteDAO_impl(conn);
+            Estudiante est = new Estudiante();
+            
             List<Materia> listaMateria = daoMateria.getAll();
             TemaDAO daoTema = new TemaDAO_impl(conn);
             List<Tema> listaTema = daoTema.getAll();
+            
             HttpSession ses1 = request.getSession();
-            int id_grado = (int) ses1.getAttribute("id_grado");
+            //int id_grado = (int) ses1.getAttribute("id_grado");
             int id_materia;
+            int id_estu = (int) ses1.getAttribute("id_est");
             String action = (request.getParameter("action") != null) ? request.getParameter("action") : "view";
             switch (action) {
                 case "matematicas":
+                    est = daoEst.getById(id_estu);
+                    request.setAttribute("estudiante", est);
                     request.setAttribute("temas", listaTema);
                     request.setAttribute("materias", listaMateria);
-                    System.out.println("GRado: "+ id_grado);
+                    //System.out.println("GRado: "+ id_grado);
                     id_materia = 1; // Suponiendo que matemáticas tiene id_materia = 1
-                    request.setAttribute("id_grad", id_grado);
+                    //request.setAttribute("id_grad", id_grado);
                     request.setAttribute("id_materi", id_materia);
                     request.getRequestDispatcher("temas.jsp").forward(request, response);
                     break;
                 case "lenguaje":
+                    est = daoEst.getById(id_estu);
+                    request.setAttribute("estudiante", est);
                     request.setAttribute("temas", listaTema);
                     request.setAttribute("materias", listaMateria);
                     id_materia = 2; // Suponiendo que matemáticas tiene id_materia = 1
-                    request.setAttribute("id_grad", id_grado);
+                    //request.setAttribute("id_grad", id_grado);
                     request.setAttribute("id_materi", id_materia);
                     request.getRequestDispatcher("temas.jsp").forward(request, response);
                     break;
                 case "sociales":
+                    est = daoEst.getById(id_estu);
+                    request.setAttribute("estudiante", est);
                     request.setAttribute("temas", listaTema);
                     request.setAttribute("materias", listaMateria);
                     id_materia = 3; // Suponiendo que matemáticas tiene id_materia = 1
-                    request.setAttribute("id_grad", id_grado);
+                    //request.setAttribute("id_grad", id_grado);
                     request.setAttribute("id_materi", id_materia);
                     request.getRequestDispatcher("temas.jsp").forward(request, response);
                     break;
                 case "artes":
+                    est = daoEst.getById(id_estu);
+                    request.setAttribute("estudiante", est);
                     request.setAttribute("temas", listaTema);
                     request.setAttribute("materias", listaMateria);
                     id_materia = 4; // Suponiendo que matemáticas tiene id_materia = 1
-                    request.setAttribute("id_grad", id_grado);
+                    //request.setAttribute("id_grad", id_grado);
                     request.setAttribute("id_materi", id_materia);
                     request.getRequestDispatcher("temas.jsp").forward(request, response);
                     break;
@@ -74,9 +91,6 @@ public class MateriaControlador extends HttpServlet {
                     request.setAttribute("usuario", usuario);
 
                     request.getRequestDispatcher("index.jsp").forward(request, response);
-                    break;
-                default:
-                    response.sendRedirect("index.jsp");
                     break;
             }
         } catch (Exception e) {

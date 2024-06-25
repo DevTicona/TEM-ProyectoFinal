@@ -23,6 +23,7 @@
             <p>Selecciona una materia para comenzar el estudio</p>
             <div class="container">
 
+
                 <div class="materias">
                     <div class="materia">
                         <a href="MateriaControlador?action=matematicas">
@@ -52,10 +53,10 @@
                                     <h3>${item.detalle_materia}</h3>
                                 </c:if>
                             </c:forEach>
-                            
+
                         </a>
                     </div>
-                    
+
                     <div class="materia">
                         <a href="MateriaControlador?action=artes">
                             <img src="img/art.png" alt="Artes Plásticas">
@@ -68,6 +69,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
 
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>

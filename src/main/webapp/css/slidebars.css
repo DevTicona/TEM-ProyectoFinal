@@ -45,12 +45,6 @@ body{
     background-color: darkturquoise; /* Color de fondo activo */
     color: #fff; /* Color de texto activo */
 }
-.content {
-    text-align: center;
-    margin-left: 250px;
-    padding: 30px;
-    font-family: 'Times New Roman', serif;
-}
 
 .icon {
     width: 24px; /* Ajustar el tamaño de los iconos */
@@ -71,4 +65,11 @@ body{
     padding-right: 80px;
     text-align: center; /* Centrar el contenido */
     padding-bottom: 30px; /* Espacio inferior */
+}
+
+.content {
+    text-align: center;
+    margin-left: 250px;
+    font-family: 'Times New Roman', serif;
+    padding-top: 70px;
 }

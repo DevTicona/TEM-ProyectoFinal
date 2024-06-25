@@ -19,15 +19,10 @@
                         </c:forEach>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <%= (opcion.equals("actividades") ? "active" : "")%>" href="ActividadControlador">Actividades</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link <%= (opcion.equals("temas") ? "active" : "")%>" href="MateriaControlador?action=<%=op%>">Temas</a>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link <%= (opcion.equals("libros") ? "active" : "")%>" href="LibroControlador">Libros</a>
-                    </li>
+                
                 </ul>
 
             </div>

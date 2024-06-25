@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-06-2024 a las 05:32:18
+-- Tiempo de generación: 25-06-2024 a las 21:53:16
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.1.25
 
@@ -28,12 +28,8 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `actividades` (
-  `id_actividad` int(11) NOT NULL,
-  `nombre_actividad` varchar(100) NOT NULL,
-  `descripcion` text DEFAULT NULL,
-  `fecha` date DEFAULT NULL,
-  `id_materia` int(11) DEFAULT NULL,
-  `id_est` int(11) DEFAULT NULL
+  `id_act` int(11) NOT NULL,
+  `id_tema` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -55,9 +51,11 @@ CREATE TABLE `estudiantes` (
 --
 
 INSERT INTO `estudiantes` (`id_est`, `nombres`, `apellidos`, `edad`, `id_grado`) VALUES
-(15, 'Ricardo', 'Paredes Tapia', 9, 5),
+(15, 'Ricardo', 'Paredes Tapia', 10, 5),
 (16, 'Rodri', 'Perez', 10, 4),
-(17, 'Patricio', 'Esponja', 8, 3);
+(17, 'Patricio', 'Esponja', 8, 3),
+(18, 'Ronald', 'Perez', 7, 1),
+(19, 'qs', 's', 9, 2);
 
 -- --------------------------------------------------------
 
@@ -150,16 +148,16 @@ CREATE TABLE `temas` (
 
 INSERT INTO `temas` (`id_tema`, `detalle_tema`, `id_materia`, `id_grado`) VALUES
 (1, 'Números y conteo', 1, 1),
-(2, 'Sumas y restas básicas', 1, 1),
-(3, 'Formas y figuras geométricas', 1, 1),
-(4, 'Patrones y secuencias', 1, 1),
+(2, 'La Suma', 1, 1),
+(3, 'La Resta', 1, 1),
+(4, 'Formas y figuras geometricas', 1, 1),
 (5, 'Medidas de longitud y tiempo', 1, 1),
 (6, 'Adición y sustracción', 1, 2),
 (7, 'Multiplicación básica', 1, 2),
 (8, 'Números pares e impares', 1, 2),
 (9, 'Introducción a las fracciones', 1, 2),
 (10, 'Conceptos de dinero (monedas y billetes)', 1, 2),
-(11, 'Multiplicación y división', 1, 3),
+(11, 'La División', 1, 3),
 (12, 'Fracciones equivalentes', 1, 3),
 (13, 'Geometría: perímetro y área', 1, 3),
 (14, 'Gráficos y tablas', 1, 3),
@@ -291,7 +289,9 @@ INSERT INTO `usuarios` (`id`, `correo`, `password`, `id_est`) VALUES
 (1, 'admin@gmail.com', '12345', NULL),
 (13, 'rick@gmail.com', '12345', 15),
 (14, 'ar@gmail.com', '1234', 16),
-(15, 'patr@gmail.com', '12345', 17);
+(15, 'patr@gmail.com', '12345', 17),
+(16, 'ro@gmail.com', '12345', 18),
+(17, '2@gmail.com', '2', 19);
 
 --
 -- Índices para tablas volcadas
@@ -301,9 +301,8 @@ INSERT INTO `usuarios` (`id`, `correo`, `password`, `id_est`) VALUES
 -- Indices de la tabla `actividades`
 --
 ALTER TABLE `actividades`
-  ADD PRIMARY KEY (`id_actividad`),
-  ADD KEY `id_materia` (`id_materia`),
-  ADD KEY `id_est` (`id_est`);
+  ADD PRIMARY KEY (`id_act`),
+  ADD KEY `id_tema` (`id_tema`);
 
 --
 -- Indices de la tabla `estudiantes`
@@ -362,13 +361,13 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `actividades`
 --
 ALTER TABLE `actividades`
-  MODIFY `id_actividad` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_act` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `estudiantes`
 --
 ALTER TABLE `estudiantes`
-  MODIFY `id_est` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_est` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `grados`
@@ -404,7 +403,7 @@ ALTER TABLE `temas`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Restricciones para tablas volcadas
@@ -414,8 +413,7 @@ ALTER TABLE `usuarios`
 -- Filtros para la tabla `actividades`
 --
 ALTER TABLE `actividades`
-  ADD CONSTRAINT `actividades_ibfk_1` FOREIGN KEY (`id_materia`) REFERENCES `materias` (`id_materia`),
-  ADD CONSTRAINT `actividades_ibfk_2` FOREIGN KEY (`id_est`) REFERENCES `estudiantes` (`id_est`);
+  ADD CONSTRAINT `actividades_ibfk_1` FOREIGN KEY (`id_tema`) REFERENCES `temas` (`id_tema`);
 
 --
 -- Filtros para la tabla `estudiantes`

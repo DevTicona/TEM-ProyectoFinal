@@ -1,14 +1,4 @@
 
-.content {
-    text-align: center; /* Centrar el contenido horizontalmente */
-}
-
-.container {
-    display: inline-block; /* Hacemos que el contenedor sea en línea para centrarlo */
-    text-align: left; /* Alineamos el texto a la izquierda dentro del contenedor */
-    padding: 20px;
-}
-
 .materias {
     display: flex; /* Utilizamos flexbox para organizar las materias */
     flex-wrap: wrap; /* Permitimos que las materias se envuelvan a una nueva línea si no caben */

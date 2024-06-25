@@ -20,7 +20,7 @@
             <jsp:include page="WEB-INF/menu.jsp">
                 <jsp:param name="opcion" value="temas"/>
                 <jsp:param name="op" value="sociales"/>
-                <jsp:param name="materia" value="Ciencias Sociales"/>
+                <jsp:param name="materia" value="ciencias Sociales"/>
             </jsp:include>
 
         </div>

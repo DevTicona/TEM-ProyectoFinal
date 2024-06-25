@@ -20,7 +20,7 @@
             <jsp:include page="WEB-INF/menu.jsp">
                 <jsp:param name="opcion" value="temas"/>
                 <jsp:param name="op" value="lenguaje"/>
-                <jsp:param name="materia" value="Lenguaje"/>
+                <jsp:param name="materia" value="lenguaje"/>
             </jsp:include>
 
         </div>

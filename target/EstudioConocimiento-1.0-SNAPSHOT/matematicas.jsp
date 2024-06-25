@@ -22,7 +22,7 @@
             <jsp:include page="WEB-INF/menu.jsp">
                 <jsp:param name="opcion" value="temas"/>
                 <jsp:param name="op" value="matematicas"/>
-                <jsp:param name="materia" value="Matematicas"/>
+                <jsp:param name="materia" value="matematicas"/>
             </jsp:include>
         </div>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>

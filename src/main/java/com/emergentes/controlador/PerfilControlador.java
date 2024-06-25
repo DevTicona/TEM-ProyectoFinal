@@ -1,4 +1,3 @@
-
 package com.emergentes.controlador;
 
 import com.emergentes.dao.EstudianteDAO;
@@ -28,7 +27,6 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "PerfilControlador", urlPatterns = {"/PerfilControlador"})
 public class PerfilControlador extends HttpServlet {
 
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -36,22 +34,22 @@ public class PerfilControlador extends HttpServlet {
             int id;
             Estudiante est = new Estudiante();
             EstudianteDAO daoEst = new EstudianteDAO_impl(conn);
-            
+
             GradoDAO daoGrado = new GradoDAO_impl(conn);
             List<Grado> listaGrados = null;
-            
-            int id_usr;
-            Usuario usr = new Usuario();
-            UsuarioDAO daoUsr= new UsuarioDAO_impl(conn);
-            
+            HttpSession ses = request.getSession();
+            int id_est = (int) ses.getAttribute("id_est");
+
             String action = (request.getParameter("action") != null) ? request.getParameter("action") : "view";
             switch (action) {
+                
                 case "view":
-                    HttpSession ses = request.getSession();
-                    int id_est = (int) ses.getAttribute("id_est");
                     request.setAttribute("id_es", id_est);
                     List<Estudiante> lista = daoEst.getAll();
                     request.setAttribute("estudiantes", lista);
+                    request.setAttribute("estudiante", est);
+                    listaGrados = daoGrado.getAll();
+                    request.setAttribute("listaGrados", listaGrados);
                     request.getRequestDispatcher("perfil.jsp").forward(request, response);
                     break;
             }
@@ -65,6 +63,40 @@ public class PerfilControlador extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try (Connection conn = new ConexionDB().conectar()) {
+            conn.setAutoCommit(false);  // Deshabilitar auto-commit para manejar transacciones manualmente
+            try {
+                int id_est = Integer.parseInt(request.getParameter("id_est"));
+                String nombres = request.getParameter("nombres");
+                String apellidos = request.getParameter("apellidos");
+                int edad = Integer.parseInt(request.getParameter("edad"));
+                int id_grado = Integer.parseInt(request.getParameter("id_grado"));
+
+                Estudiante est = new Estudiante();
+                EstudianteDAO daoEst = new EstudianteDAO_impl(conn);
+
+                est.setId_est(id_est);
+                est.setNombres(nombres);
+                est.setApellidos(apellidos);
+                est.setEdad(edad);
+                est.setId_grado(id_grado);
+
+
+                if (id_est != 0) {
+                    // Insertar Estudiante y luego Usuario
+                    daoEst.update(est);
+                } 
+                conn.commit();  // Confirmar la transacción
+                response.sendRedirect("PerfilControlador");
+            } catch (Exception ex) {
+                conn.rollback();  // Revertir la transacción en caso de error
+                throw new ServletException("Error en transacción: " + ex.getMessage(), ex);
+            } finally {
+                conn.setAutoCommit(true);  // Restaurar auto-commit
+            }
+        } catch (SQLException ex) {
+            throw new ServletException("Error al conectar con la base de datos: " + ex.getMessage(), ex);
+        }
     }
 
 }

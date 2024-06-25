@@ -118,9 +118,8 @@ public class EstudianteControlador extends HttpServlet {
                     usr.setId_est(id_est);
                     daoUsr.insert(usr);
                 } else {
-                    // Actualizar Estudiante y Usuario
+                    // Actualizar Estudiante
                     daoEst.update(est);
-                    daoUsr.update(usr);
                 }
 
                 conn.commit();  // Confirmar la transacción
